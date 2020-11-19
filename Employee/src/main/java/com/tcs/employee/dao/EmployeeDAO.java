@@ -1,6 +1,5 @@
 package com.tcs.employee.dao;
 
-import com.tcs.employee.utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,32 +7,39 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.tcs.employee.model.Employee;
+import com.tcs.employee.utils.DBUtils;
 
+@Repository
 public class EmployeeDAO {
 	
-	private EmployeeDAO() {
-	// TODO Auto-generated constructor stub
-	}
-
-	private static EmployeeDAO dao;
-
-	public static EmployeeDAO getInstance() {
-		
-		if(dao==null) {
-			dao = new EmployeeDAO();
-			System.out.println("inside the if condition");
-			return dao;
-		}
-		return dao;
-		
-		
-	}
+//	private EmployeeDAO() {
+//	// TODO Auto-generated constructor stub
+//	}
+//
+//	private static EmployeeDAO dao;
+//
+//	public static EmployeeDAO getInstance() {
+//		
+//		if(dao==null) {
+//			dao = new EmployeeDAO();
+//			System.out.println("inside the if condition");
+//			return dao;
+//		}
+//		return dao;
+//		
+//		
+//	}
+	
+	@Autowired
+	DBUtils dbUtils;
 	
 	public String addEmployee(Employee employee) {
 			// TODO Auto-generated method stub
-			Connection connection = DBUtils.getConnection();
+			Connection connection = dbUtils.getConnection();
 			PreparedStatement preparedStatement = null;
 			int result = 0;
 			String insertemployee = "insert into EMPLOYEE "
@@ -72,7 +78,7 @@ public class EmployeeDAO {
 	}
 	public String updateEmployee(long id) {
 		Employee employee = new Employee();
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertemployee = "Update EMPLOYEE Set "
@@ -112,7 +118,7 @@ public class EmployeeDAO {
 	}
 	public String deleteEmployee(long id) {
 		Employee employee = new Employee();
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertemployee = "DELETE FROM EMPLOYEE WHERE "
@@ -145,7 +151,7 @@ public class EmployeeDAO {
 	}
 	public Optional<Employee> findById(long id) {
 		
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
@@ -181,13 +187,13 @@ public class EmployeeDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(employee);
 	}
 	
 	public Optional<List<Employee>> getEmployees() {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		List<Employee> emps = null;
@@ -223,12 +229,12 @@ public class EmployeeDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(emps);
 	}
 	public Optional<List<Employee>> findByOrganizationId(long id) {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		List<Employee> emps = null;
@@ -265,7 +271,7 @@ public class EmployeeDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(emps);
 	}

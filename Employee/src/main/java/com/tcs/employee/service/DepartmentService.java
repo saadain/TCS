@@ -4,29 +4,35 @@ package com.tcs.employee.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.tcs.employee.dao.DepartmentDAO;
-import com.tcs.employee.dao.EmployeeDAO;
 import com.tcs.employee.model.Department;
 
+@Service
 public class DepartmentService {
 	
-
-	private static DepartmentService dao;
-
-	private DepartmentService() {
-		// TODO Auto-generated constructor stub
-	}
-	public static DepartmentService getInstance() {
-		
-		if(dao==null) {
-			dao = new DepartmentService();
-			System.out.println("inside the if condition");
-			return dao;
-		}
-		return dao;
-	}
+//
+//	private static DepartmentService dao;
+//
+//	private DepartmentService() {
+//		// TODO Auto-generated constructor stub
+//	}
+//	public static DepartmentService getInstance() {
+//		
+//		if(dao==null) {
+//			dao = new DepartmentService();
+//			System.out.println("inside the if condition");
+//			return dao;
+//		}
+//		return dao;
+//	}
+//	
+//	DepartmentDAO departmentdao = DepartmentDAO.getInstance();
 	
-	DepartmentDAO departmentdao = DepartmentDAO.getInstance();
+	@Autowired 
+	DepartmentDAO departmentdao;
 	
 	public String addDepartment(Department department) {
 		return departmentdao.addDepartment(department);

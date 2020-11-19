@@ -1,40 +1,48 @@
 package com.tcs.employee.dao;
 
-import com.tcs.employee.utils.DBUtils;
 import java.sql.Connection;
+import org.springframework.stereotype.Repository;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.tcs.employee.model.Department;
 import com.tcs.employee.model.Employee;
 import com.tcs.employee.model.Organization;
+import com.tcs.employee.utils.DBUtils;
 
+@Repository
 public class OrganizationDAO {
 	
-	private OrganizationDAO() {
-		// TODO Auto-generated constructor stub
-		}
-
-		private static OrganizationDAO dao;
-
-		public static OrganizationDAO getInstance() {
-			
-			if(dao==null) {
-				dao = new OrganizationDAO();
-				System.out.println("inside the if condition");
-				return dao;
-			}
-			return dao;
-			
-			
-		}
+//	private OrganizationDAO() {
+//		// TODO Auto-generated constructor stub
+//		}
+//
+//		private static OrganizationDAO dao;
+//
+//		public static OrganizationDAO getInstance() {
+//			
+//			if(dao==null) {
+//				dao = new OrganizationDAO();
+//				System.out.println("inside the if condition");
+//				return dao;
+//			}
+//			return dao;
+//			
+//			
+//		}
+	
+	@Autowired
+	DBUtils dbUtils;
 	
 	public String addOrganization(Organization organization) {
 			// TODO Auto-generated method stub
-			Connection connection = DBUtils.getConnection();
+			Connection connection = dbUtils.getConnection();
 			PreparedStatement preparedStatement = null;
 			int result = 0;
 			String insertorganization = "insert into ORGANIZATION "
@@ -72,7 +80,7 @@ public class OrganizationDAO {
 	
 	public String updateOrganization(long id) {
 		Organization organization = new Organization();
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertorganization = "Update ORGANIZATION Set "
@@ -112,7 +120,7 @@ public class OrganizationDAO {
 	
 	public String deleteOrganization(long id) {
 		Organization organization = new Organization();
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertorganization = "DELETE FROM ORGANIZATION WHERE "
@@ -146,7 +154,7 @@ public class OrganizationDAO {
 	
 	public Optional<Organization> findById(long id) {
 		
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ResultSet resultSet2 = null;
@@ -230,13 +238,13 @@ public class OrganizationDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(organization);
 	}
 	
 	public Optional<List<Organization>> getOrganizations() {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ResultSet resultSet2 = null;
@@ -323,7 +331,7 @@ public class OrganizationDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(emps);
 	}

@@ -1,41 +1,46 @@
 package com.tcs.employee.dao;
 
-import com.tcs.employee.utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.tcs.employee.model.Department;
 import com.tcs.employee.model.Employee;
+import com.tcs.employee.utils.DBUtils;
 
+@Repository
 public class DepartmentDAO {
 	
-	private DepartmentDAO() {
-		// TODO Auto-generated constructor stub
-		}
-
-		private static DepartmentDAO dao;
-
-		public static DepartmentDAO getInstance() {
-			
-			if(dao==null) {
-				dao = new DepartmentDAO();
-				System.out.println("inside the if condition");
-				return dao;
-			}
-			return dao;
-			
-			
-		}
+//	private DepartmentDAO() {
+//		// TODO Auto-generated constructor stub
+//		}
+//
+//		private static DepartmentDAO dao;
+//
+//		public static DepartmentDAO getInstance() {
+//			
+//			if(dao==null) {
+//				dao = new DepartmentDAO();
+//				System.out.println("inside the if condition");
+//				return dao;
+//			}
+//			return dao;
+//			
+//			
+//		}
+	
+	@Autowired
+	DBUtils dbUtils;
 	
 	public String addDepartment(Department department) {
 			// TODO Auto-generated method stub
-			Connection connection = DBUtils.getConnection();
+			Connection connection = dbUtils.getConnection();
 			PreparedStatement preparedStatement = null;
 			int result = 0;
 			String insertdepartment = "insert into DEPARTMENT "
@@ -72,7 +77,7 @@ public class DepartmentDAO {
 	}
 	public String updateDepartment(long id) {
 		Department department = new Department();
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertdepartment = "Update DEPARTMENT Set "
@@ -111,7 +116,7 @@ public class DepartmentDAO {
 	}
 	public String deleteDepartment(long id) {
 		Department department = new Department();
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		int result = 0;
 		String insertdepartment = "DELETE FROM DEPARTMENT WHERE "
@@ -145,7 +150,7 @@ public class DepartmentDAO {
 	@SuppressWarnings("null")
 	public Optional<Department> findById(long id) {
 		
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ResultSet resultSet2 = null;
@@ -205,13 +210,13 @@ public class DepartmentDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(department);
 	}
 	
 	public Optional<List<Department>> getDepartments() {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ResultSet resultSet2 = null;
@@ -271,12 +276,12 @@ public class DepartmentDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(departments);
 	}
 	public Optional<List<Department>> findByOrganizationId(long id) {
-		Connection connection = DBUtils.getConnection();
+		Connection connection = dbUtils.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ResultSet resultSet2 = null;
@@ -338,7 +343,7 @@ public class DepartmentDAO {
 			return Optional.empty();
 		}
 		finally {
-			DBUtils.closeConnection(connection);
+			dbUtils.closeConnection(connection);
 		}
 		return Optional.of(departments);
 	}

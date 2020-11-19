@@ -3,29 +3,34 @@ package com.tcs.employee.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.tcs.employee.dao.EmployeeDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.tcs.employee.dao.OrganizationDAO;
 import com.tcs.employee.model.Organization;
 
+@Service
 public class OrganizationService {
 	
-	private static OrganizationService dao;
-
-	private OrganizationService() {
-		// TODO Auto-generated constructor stub
-	}
-	public static OrganizationService getInstance() {
-		
-		if(dao==null) {
-			dao = new OrganizationService();
-			System.out.println("inside the if condition");
-			return dao;
-		}
-		return dao;
-	}
+//	private static OrganizationService dao;
+//
+//	private OrganizationService() {
+//		// TODO Auto-generated constructor stub
+//	}
+//	public static OrganizationService getInstance() {
+//		
+//		if(dao==null) {
+//			dao = new OrganizationService();
+//			System.out.println("inside the if condition");
+//			return dao;
+//		}
+//		return dao;
+//	}
+//	
+//	OrganizationDAO organizationdao = OrganizationDAO.getInstance();
 	
-	OrganizationDAO organizationdao = OrganizationDAO.getInstance();
-	
+	@Autowired
+	OrganizationDAO organizationdao;
 	public String addorganization(Organization organization) {
 		return organizationdao.addOrganization(organization);
 	}
